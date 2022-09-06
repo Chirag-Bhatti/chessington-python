@@ -40,14 +40,19 @@ class Pawn(Piece):
         start_row = 1 if player_colour == Player.WHITE else 6
         direction = 1 if player_colour == Player.WHITE else -1
 
+        one_spaces_up = Square.at(current_location.row + (1 * direction), current_location.col)
+        two_spaces_up = Square.at(current_location.row + (2 * direction), current_location.col)
+
         # Starting movement
         if current_location.row == start_row:
-            avaliable_moves.append(Square.at(current_location.row + (2 * direction), current_location.col))
+            if not (board.get_piece(two_spaces_up) or board.get_piece(one_spaces_up)):
+              avaliable_moves.append(two_spaces_up)
+            
         # General movement
-        avaliable_moves.append(Square.at(current_location.row + (1 * direction), current_location.col))
+        if not board.get_piece(one_spaces_up):
+            avaliable_moves.append(one_spaces_up)
 
         return avaliable_moves
-
 
 class Knight(Piece):
     """
