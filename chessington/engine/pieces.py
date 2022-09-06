@@ -38,10 +38,15 @@ class Pawn(Piece):
         current_location = board.find_piece(self)
         player_colour = self.player
         start_row = 1 if player_colour == Player.WHITE else 6
+        end_row = 7 if player_colour == Player.WHITE else 0
         direction = 1 if player_colour == Player.WHITE else -1
 
         one_spaces_up = Square.at(current_location.row + (1 * direction), current_location.col)
         two_spaces_up = Square.at(current_location.row + (2 * direction), current_location.col)
+
+        # End of board
+        if current_location.row == end_row:
+            return []
 
         # Starting movement
         if current_location.row == start_row:
