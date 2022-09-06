@@ -28,6 +28,9 @@ class Piece(ABC):
         current_square = board.find_piece(self)
         board.move_piece(current_square, new_square)
 
+    def is_piece_present_and_capturable(self, board, square):
+        piece = board.get_piece(square)
+        return piece and (piece.player is not self.player)
 
 class Pawn(Piece):
     """
@@ -61,10 +64,8 @@ class Pawn(Piece):
         if not board.get_piece(one_spaces_up):
             avaliable_moves.append(one_spaces_up)
        
-        for diagonal in diagonals:
-            piece_on_diagonal = board.get_piece(diagonal)
-            if piece_on_diagonal and piece_on_diagonal.player is not player_colour:
-                avaliable_moves.append(diagonal)
+        # Diagonal capture
+        avaliable_moves += filter(lambda diagonal: self.is_piece_present_and_capturable(board, diagonal), diagonals)
 
         return avaliable_moves
 
@@ -92,7 +93,22 @@ class Rook(Piece):
     """
 
     def get_available_moves(self, board):
-        return []
+        avaliable_moves = []
+        current_location = board.find_piece(self)
+
+        # WIP
+        # max_up
+        # max_down
+        # max_left
+        # max_right
+
+        # Up
+
+        # Down
+
+        # Left 
+
+        # Right
 
 
 class Queen(Piece):
@@ -111,3 +127,4 @@ class King(Piece):
 
     def get_available_moves(self, board):
         return []
+
