@@ -36,11 +36,23 @@ class Pawn(Piece):
     def get_available_moves(self, board) -> List[Square]:
         avaliable_moves = []
         current_location = board.find_piece(self)
+
+        # Starting movement
+        # Black row 6 
+        # White row 1
         if self.player == Player.WHITE:
-            avaliable_moves.append(Square.at( current_location.row +1, current_location.col))
+            if current_location.row == 1:
+                avaliable_moves.append(Square.at(current_location.row +2, current_location.col))
         else:
-            avaliable_moves.append(Square.at( current_location.row -1,  current_location.col))
-        print(current_location)
+            if current_location.row == 6:
+                avaliable_moves.append(Square.at(current_location.row -2,  current_location.col))
+
+        # General movement
+        if self.player == Player.WHITE:
+            avaliable_moves.append(Square.at(current_location.row +1, current_location.col))
+        else:
+            avaliable_moves.append(Square.at(current_location.row -1,  current_location.col))
+
         return avaliable_moves
 
 
