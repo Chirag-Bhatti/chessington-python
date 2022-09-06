@@ -43,6 +43,10 @@ class Pawn(Piece):
 
         one_spaces_up = Square.at(current_location.row + (1 * direction), current_location.col)
         two_spaces_up = Square.at(current_location.row + (2 * direction), current_location.col)
+        diagonals = [
+            Square.at(current_location.row + (1 * direction), current_location.col-1),
+            Square.at(current_location.row + (1 * direction), current_location.col+1)
+            ]
 
         # End of board
         if current_location.row == end_row:
@@ -56,6 +60,11 @@ class Pawn(Piece):
         # General movement
         if not board.get_piece(one_spaces_up):
             avaliable_moves.append(one_spaces_up)
+       
+        for diagonal in diagonals:
+            piece_on_diagonal = board.get_piece(diagonal)
+            if piece_on_diagonal and piece_on_diagonal.player is not player_colour:
+                avaliable_moves.append(diagonal)
 
         return avaliable_moves
 
